@@ -1,25 +1,22 @@
 
+
 # coding: utf-8
 
 import sys
 import numpy
-import matplotlib.pyplot
-    
-
-def analyse (filename, outfile=None):
-    """Load data and create plots
-    
-    Plots created as subplots with placeholders, with set lables of av, max and min. layout tight
+import matplotlib.pyplot   
+def analyse(filename, outfile=None):
+    """Load data and create plots.  
+    Subplots with placeholders, with set lables, layout tight
     """
-    data = numpy.loadtxt(fname=filename, delimiter=',')
-    
+    data = numpy.loadtxt(fname=filename, delimiter=',')    
     # Create a wide figure to hold the subplots
-    fig = matplotlib.pyplot.figure (figsize=(10.3, 3.0))
+    fig = matplotlib.pyplot.figure(figsize=(10.3, 3.0))
 
     # create placeholders for plots
-    subplot1=fig.add_subplot (1,3,1)
-    subplot2=fig.add_subplot (1,3,2)
-    subplot3=fig.add_subplot (1,3,3)
+    subplot1 = fig.add_subplot (1,3,1)
+    subplot2 = fig.add_subplot (1,3,2)
+    subplot3 = fig.add_subplot (1,3,3)
 
     subplot1.set_ylabel('average')
     subplot1.plot(numpy.mean(data, axis=0))
@@ -35,9 +32,8 @@ def analyse (filename, outfile=None):
         matplotlib.pyplot.show()
     else:
         matplotlib.pyplot.savefig(outfile)
-    
-    
-def detect_problems (filename):
+        
+def detect_problems(filename):
     """Some of our temperature files have problems, check for these
     
     This function reads a file (filename argument) and reports on odd looking maxima and minima that add up to 0. 
@@ -46,20 +42,20 @@ def detect_problems (filename):
     """
     data = numpy.loadtxt(fname=filename, delimiter=',')
     
-    if numpy.max (data, axis=0)[0] ==0 and numpy.max (data, axis=0)[20]==20:
+    if numpy.max(data, axis=0)[0] ==0 and numpy.max(data, axis=0)[20]==20:
         print("Suspicious looking maxima")
     elif numpy.sum(numpy.min(data, axis=0))==0:
         print("Minima add up to zero")
     else:
-        print ("Data looks OK")
+        print("Data looks OK")
         
-if __name__=="__main__":    
+if __name__ == "__main__":    
 
-    print ("Running",sys.argv[0])
+    print("Running",sys.argv[0])
 
-    print (sys.argv[1])
-    analyse (sys.argv[1], outfile=sys.argv[2])
-    detect_problems (sys.argv[1])
+    print(sys.argv[1])
+    analyse(sys.argv[1], outfile=sys.argv[2])
+    detect_problems(sys.argv[1])
 
 
 
